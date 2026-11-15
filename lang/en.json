@@ -1,0 +1,31 @@
+{
+  "NEAN_DIRECIONAL": {
+    "Titulo": "Nean Direcional",
+    "Dica": "Tokens drawn at 45°: every move or turn (Shift/Ctrl + mouse wheel) uses the pose of the nearest diagonal. One image per direction is enough, armed or unarmed; if a direction is missing, the token shows the nearest one available.",
+    "Ativar": "Enable image swapping on this token",
+    "PorPasta": "Fill from folder",
+    "PastaResultado": "{n} of {total} images found by file name.",
+    "Escolher": "Choose image",
+    "Limpar": "Clear",
+    "Salvar": "Save",
+    "TambemPrototipo": "Also save to the actor's prototype token (applies to its new tokens)",
+    "SemArma": "Unarmed",
+    "ComArma": "Armed",
+    "Normal": "Normal",
+    "Furtivo": "Stealthy",
+    "Armado": "Weapon drawn",
+    "Caido": "Down",
+    "CaidoMorto": "Prone / dead",
+    "Pose": {
+      "frente_esq": "Front",
+      "frente_dir": "Front",
+      "costas_esq": "Back",
+      "costas_dir": "Back"
+    },
+    "Config": {
+      "statusCaido": { "nome": "Down conditions", "dica": "IDs of the conditions that show the down image, comma separated (Foundry default: dead, prone, unconscious)." },
+      "statusFurtivo": { "nome": "Stealth conditions (extra)", "dica": "Besides the module's Stealthy condition, other IDs from your system that count as stealthy, comma separated." },
+      "statusArmado": { "nome": "Weapon drawn conditions (extra)", "dica": "Besides the module's Weapon drawn condition, other IDs from your system that count as armed, comma separated." }
+    }
+  }
+}

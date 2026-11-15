@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- espada empunhada -->
+  <g fill="#ffffff">
+    <path d="M44 6 L52 6 L52 14 L28 38 L22 32 Z"/>
+    <path d="M14 34 L20 28 L36 44 L30 50 Z"/>
+    <rect x="11" y="43" width="7" height="14" rx="2" transform="rotate(-45 14.5 50)"/>
+    <circle cx="9" cy="55" r="3.5"/>
+  </g>
+</svg>

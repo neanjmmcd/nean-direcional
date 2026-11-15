@@ -1,0 +1,31 @@
+{
+  "NEAN_DIRECIONAL": {
+    "Titulo": "Nean Direcional",
+    "Dica": "Tokens desenhados a 45°: cada movimento ou giro (Shift/Ctrl + roda do mouse) usa a pose da diagonal mais próxima. Basta uma imagem por direção, com ou sem arma; se faltar a direção, o token mostra a mais próxima que existir.",
+    "Ativar": "Ativar a troca de imagens neste token",
+    "PorPasta": "Preencher pela pasta",
+    "PastaResultado": "{n} de {total} imagens encontradas pelo nome do arquivo.",
+    "Escolher": "Escolher imagem",
+    "Limpar": "Limpar",
+    "Salvar": "Salvar",
+    "TambemPrototipo": "Salvar também no protótipo do ator (vale para os tokens novos dele)",
+    "SemArma": "Sem arma",
+    "ComArma": "Com arma",
+    "Normal": "Normal",
+    "Furtivo": "Furtivo",
+    "Armado": "Arma em punho",
+    "Caido": "Caído",
+    "CaidoMorto": "Caído / morto",
+    "Pose": {
+      "frente_esq": "Frente",
+      "frente_dir": "Frente",
+      "costas_esq": "Costas",
+      "costas_dir": "Costas"
+    },
+    "Config": {
+      "statusCaido": { "nome": "Condições de caído", "dica": "IDs das condições que mostram a imagem de caído, separados por vírgula (padrão do Foundry: dead, prone, unconscious)." },
+      "statusFurtivo": { "nome": "Condições de furtivo (extra)", "dica": "Além da condição Furtivo do módulo, outros IDs do seu sistema que contam como furtivo, separados por vírgula." },
+      "statusArmado": { "nome": "Condições de arma em punho (extra)", "dica": "Além da condição Arma em punho do módulo, outros IDs do seu sistema que contam como armado, separados por vírgula." }
+    }
+  }
+}

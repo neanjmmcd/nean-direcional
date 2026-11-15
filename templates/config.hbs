@@ -1,0 +1,37 @@
+<div class="nd-corpo standard-form">
+  <p class="hint">{{localize "NEAN_DIRECIONAL.Dica"}}</p>
+  <div class="nd-topo">
+    <label class="nd-check"><input type="checkbox" name="ativo" {{checked ativo}}> {{localize "NEAN_DIRECIONAL.Ativar"}}</label>
+    <button type="button" data-action="pasta"><i class="fa-solid fa-folder-open"></i> {{localize "NEAN_DIRECIONAL.PorPasta"}}</button>
+  </div>
+
+  {{#each secoes}}
+  <fieldset class="nd-secao">
+    <legend>{{titulo}}</legend>
+    <div class="nd-colunas">
+      {{#each colunas}}
+      <div class="nd-coluna">
+        {{#if titulo}}<span class="nd-direcao">{{titulo}}</span>{{/if}}
+        {{#each vagas}}
+        <div class="nd-vaga">
+          <a class="nd-img" data-action="escolher" data-key="{{key}}" data-tooltip="{{#if src}}{{src}}{{else}}{{localize "NEAN_DIRECIONAL.Escolher"}}{{/if}}">
+            {{#if src}}<img src="{{src}}" alt="">{{else}}<i class="fa-solid fa-plus"></i>{{/if}}
+          </a>
+          <span class="nd-nome">{{rotulo}}</span>
+          {{#if src}}<a class="nd-limpar" data-action="limpar" data-key="{{key}}" data-tooltip="{{localize "NEAN_DIRECIONAL.Limpar"}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+          <input type="hidden" name="imagens.{{key}}" value="{{src}}">
+        </div>
+        {{/each}}
+      </div>
+      {{/each}}
+    </div>
+  </fieldset>
+  {{/each}}
+
+  {{#if ehToken}}
+  <label class="nd-check"><input type="checkbox" name="prototipo" {{checked prototipo}}> {{localize "NEAN_DIRECIONAL.TambemPrototipo"}}</label>
+  {{/if}}
+</div>
+<footer class="form-footer">
+  <button type="submit"><i class="fa-solid fa-floppy-disk"></i> {{localize "NEAN_DIRECIONAL.Salvar"}}</button>
+</footer>
