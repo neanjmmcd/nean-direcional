@@ -10,6 +10,9 @@
   ],
   "license": "LICENSE",
   "readme": "README.md",
+  "url": "https://github.com/neanjmmcd/nean-direcional",
+  "manifest": "https://raw.githubusercontent.com/neanjmmcd/nean-direcional/main/module.json",
+  "download": "https://github.com/neanjmmcd/nean-direcional/archive/refs/heads/main.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "14.369"

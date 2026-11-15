@@ -3,6 +3,16 @@
 Módulo para **Foundry VTT 13 e 14** que troca a imagem do token conforme a direção em que ele anda ou é girado.
 Não depende de nenhum sistema.
 
+## Instalação
+
+No Foundry: **Módulos Adicionais → Instalar Módulo**, cole no campo **URL do manifesto**:
+
+```
+https://raw.githubusercontent.com/neanjmmcd/nean-direcional/main/module.json
+```
+
+Depois ative o módulo no mundo em **Configurações → Gerenciar Módulos**.
+
 ## O que faz
 
 - **4 poses a 45°**: frente ↙, frente ↘, costas ↖ e costas ↗. Cada movimento usa a diagonal mais próxima.
