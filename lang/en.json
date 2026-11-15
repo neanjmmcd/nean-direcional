@@ -23,9 +23,21 @@
       "costas_dir": "Back"
     },
     "Config": {
-      "statusCaido": { "nome": "Down conditions", "dica": "IDs of the conditions that show the down image, comma separated (Foundry default: dead, prone, unconscious)." },
-      "statusFurtivo": { "nome": "Stealth conditions (extra)", "dica": "Besides the module's Stealthy condition, other IDs from your system that count as stealthy, comma separated." },
-      "statusArmado": { "nome": "Weapon drawn conditions (extra)", "dica": "Besides the module's Weapon drawn condition, other IDs from your system that count as armed, comma separated." }
-    }
+      "statusCaido": {
+        "nome": "Down conditions",
+        "dica": "IDs of the conditions that show the down image, comma separated (Foundry default: dead, prone, unconscious)."
+      },
+      "statusFurtivo": {
+        "nome": "Stealth conditions (extra)",
+        "dica": "Besides the module's Stealthy condition, other IDs from your system that count as stealthy, comma separated."
+      },
+      "statusArmado": {
+        "nome": "Weapon drawn conditions (extra)",
+        "dica": "Besides the module's Weapon drawn condition, other IDs from your system that count as armed, comma separated."
+      }
+    },
+    "SemPermissaoEnviar": "You are not allowed to upload files (ask the GM: Settings → Permissions → Upload files).",
+    "Enviadas": "{n} of {total} images copied to {pasta}.",
+    "DicaArrastar": "You can drag images from your file explorer: one onto a slot goes to that slot; several at once are matched by name. The images are copied into the world folder."
   }
 }

@@ -24,7 +24,7 @@ export class ConfigDirecional extends HandlebarsApplicationMixin(ApplicationV2) 
     classes: [ID],
     tag: "form",
     window: { icon: "fa-solid fa-compass", resizable: true },
-    position: { width: 660, height: "auto" },
+    position: { width: 660, height: Math.min(820, window.innerHeight - 80) },
     form: { handler: ConfigDirecional.#salvar, closeOnSubmit: true },
     actions: { escolher: ConfigDirecional.#escolher, limpar: ConfigDirecional.#limpar, pasta: ConfigDirecional.#pasta }
   };
@@ -77,6 +77,89 @@ export class ConfigDirecional extends HandlebarsApplicationMixin(ApplicationV2) 
     for (const nome of ["ativo", "prototipo"]) {
       this.element.querySelector(`[name="${nome}"]`)?.addEventListener("change", ev => { this.estado[nome] = ev.target.checked; });
     }
+    // Arrastar imagens: do Windows Explorer (copia para o mundo) ou de dentro do Foundry
+    const raiz = this.element.querySelector(".nd-raiz");
+    if (!raiz) return;
+    raiz.addEventListener("dragover", ev => {
+      ev.preventDefault();
+      if (ev.dataTransfer) ev.dataTransfer.dropEffect = "copy";
+      raiz.querySelectorAll(".nd-alvo").forEach(e => e.classList.remove("nd-alvo"));
+      ev.target.closest?.(".nd-img")?.classList.add("nd-alvo");
+      raiz.classList.add("nd-soltando");
+    });
+    raiz.addEventListener("dragleave", ev => {
+      if (raiz.contains(ev.relatedTarget)) return;
+      raiz.classList.remove("nd-soltando");
+      raiz.querySelectorAll(".nd-alvo").forEach(e => e.classList.remove("nd-alvo"));
+    });
+    raiz.addEventListener("drop", ev => this.#soltar(ev));
+  }
+
+  /* ---------- arrastar e soltar ---------- */
+
+  async #soltar(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const chave = ev.target.closest?.(".nd-img")?.dataset.key;
+    const arquivos = [...(ev.dataTransfer?.files ?? [])]
+      .filter(f => f.type?.startsWith("image/") || /\.(png|webp|jpe?g|gif|avif|svg)$/i.test(f.name))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    if (arquivos.length) {
+      if (!game.user.can("FILES_UPLOAD")) { this.render(); return ui.notifications.warn(L("SemPermissaoEnviar")); }
+      let n = 0;
+      if (chave && arquivos.length === 1) {
+        // um arquivo numa vaga: vai para aquela vaga, seja qual for o nome
+        const caminho = await this.#enviar(arquivos[0]);
+        if (caminho) { this.rascunho[chave] = caminho; n++; }
+      } else {
+        // vários arquivos (ou fora de uma vaga): encaixa pelo nome
+        for (const f of arquivos) {
+          const k = VAGAS.find(v => serve(baseDoArquivo(f.name), v));
+          if (!k) continue;
+          const caminho = await this.#enviar(f);
+          if (caminho) { this.rascunho[k] = caminho; n++; }
+        }
+      }
+      ui.notifications[n ? "info" : "warn"](game.i18n.format("NEAN_DIRECIONAL.Enviadas", { n, total: arquivos.length, pasta: this.#pastaDoToken() }));
+      return this.render();
+    }
+
+    // Arrastado de dentro do Foundry (navegador de arquivos, tile, outra janela)
+    let dados = null;
+    try { dados = JSON.parse(ev.dataTransfer?.getData("text/plain") || "null"); } catch { dados = null; }
+    const src = dados?.texture?.src ?? dados?.src ?? dados?.img;
+    if (src && chave) this.rascunho[chave] = src;
+    this.render();
+  }
+
+  /** worlds/<mundo>/nean-direcional/<nome-do-token> */
+  #pastaDoToken() {
+    const nome = String(this.documento.name ?? "token").normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "token";
+    return `worlds/${game.world.id}/${ID}/${nome}`;
+  }
+
+  async #garantirPasta(pasta) {
+    if (this._pastaPronta === pasta) return;
+    try { await FP().browse("data", pasta); }
+    catch {
+      const partes = pasta.split("/");
+      for (let i = 3; i <= partes.length; i++) {          // worlds/<mundo> já existe
+        try { await FP().createDirectory("data", partes.slice(0, i).join("/")); } catch { /* já existe */ }
+      }
+    }
+    this._pastaPronta = pasta;
+  }
+
+  /** Copia o arquivo do computador para a pasta do token no mundo; devolve o caminho salvo */
+  async #enviar(arquivo) {
+    const pasta = this.#pastaDoToken();
+    await this.#garantirPasta(pasta);
+    const nome = arquivo.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\w.\-]+/g, "_");
+    const copia = nome === arquivo.name ? arquivo : new File([arquivo], nome, { type: arquivo.type });
+    const r = await FP().upload("data", pasta, copia, {}, { notify: false });
+    return r?.path ?? null;
   }
 
   static #escolher(_ev, alvo) {
