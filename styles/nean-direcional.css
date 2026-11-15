@@ -23,3 +23,17 @@
 .nean-direcional .nd-nome { font-size: 0.75rem; text-align: center; margin-top: 0.1rem; white-space: nowrap; opacity: 0.85; }
 .nean-direcional .nd-limpar { position: absolute; top: -0.3rem; right: -0.3rem; font-size: 0.8rem; cursor: pointer; }
 #token-hud .nean-direcional-hud.active { color: var(--color-warm-1, #ff6400); }
+
+/* Lista de atores */
+.nd-lista-janela .window-content { padding: 0; overflow: hidden; }
+.nd-lista-janela .nd-lista-raiz { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.nd-lista-janela .nd-busca-linha { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; flex: 0 0 auto; }
+.nd-lista-janela .nd-busca { flex: 1; }
+.nd-lista-janela .nd-lista { flex: 1 1 auto; min-height: 0; overflow-y: auto; list-style: none; margin: 0; padding: 0 0.5rem 0.5rem; }
+.nd-lista-janela .nd-ator { display: flex; align-items: center; gap: 0.6rem; padding: 0.3rem 0.4rem; border-radius: 4px; cursor: pointer; }
+.nd-lista-janela .nd-ator:hover { background: rgba(255, 100, 0, 0.15); }
+.nd-lista-janela .nd-ator img { width: 2.25rem; height: 2.25rem; object-fit: cover; border: none; border-radius: 4px; flex: 0 0 auto; }
+.nd-lista-janela .nd-ator-nome { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nd-lista-janela .nd-ator-tipo { font-size: 0.8rem; opacity: 0.7; white-space: nowrap; }
+.nd-lista-janela .nd-ator-ativo { color: var(--color-warm-1, #ff6400); }
+.nd-lista-janela .nd-nada { padding: 0 0.75rem; }

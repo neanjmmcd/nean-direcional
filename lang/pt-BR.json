@@ -38,6 +38,15 @@
     },
     "SemPermissaoEnviar": "Você não tem permissão para enviar arquivos (peça ao mestre: Configurações → Permissões → Enviar arquivos).",
     "Enviadas": "{n} de {total} imagens copiadas para {pasta}.",
-    "DicaArrastar": "Dá para arrastar imagens do Windows Explorer: uma numa vaga vai para aquela vaga; várias de uma vez são encaixadas pelo nome. As imagens são copiadas para a pasta do mundo."
+    "DicaArrastar": "Dá para arrastar imagens do Windows Explorer: uma numa vaga vai para aquela vaga; várias de uma vez são encaixadas pelo nome. As imagens são copiadas para a pasta do mundo.",
+    "Lista": {
+      "Titulo": "Nean Direcional: atores",
+      "Menu": "Atores",
+      "Botao": "Lista de atores",
+      "Dica": "Abre a lista de todos os atores do mundo, com busca pelo nome; clique num ator para configurar as imagens do protótipo dele.",
+      "Buscar": "Buscar pelo nome…",
+      "Ativo": "Nean Direcional ativo",
+      "Nada": "Nenhum ator com esse nome."
+    }
   }
 }

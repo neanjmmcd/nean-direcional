@@ -219,7 +219,11 @@ export class ConfigDirecional extends HandlebarsApplicationMixin(ApplicationV2) 
       await actor.update(upd);
     };
 
-    if (this.ehAtor) return salvarPrototipo(this.documento);
+    // atualiza a marca de "ativo" na lista de atores, se estiver aberta
+    const atualizarLista = () => {
+      for (const app of foundry.applications.instances.values()) if (app.options.classes?.includes("nd-lista-janela")) app.render();
+    };
+    if (this.ehAtor) { await salvarPrototipo(this.documento); return atualizarLista(); }
 
     const tok = this.documento;
     const f = montar(tok.flags?.[ID], tok.texture.src);
@@ -232,5 +236,6 @@ export class ConfigDirecional extends HandlebarsApplicationMixin(ApplicationV2) 
     await tok.update(upd, { neanDirecional: true });
     preCarregar(tok);
     if (dados.prototipo && tok.actor) await salvarPrototipo(game.actors.get(tok.actor.id) ?? tok.actor);
+    atualizarLista();
   }
 }

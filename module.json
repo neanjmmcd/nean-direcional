@@ -2,7 +2,7 @@
   "id": "nean-direcional",
   "title": "Nean Direcional",
   "description": "Troca a imagem do token conforme a direção em que ele anda ou é girado (4 poses a 45°), com poses próprias para furtivo, arma em punho e caído/morto. Funciona com qualquer sistema.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "authors": [
     {
       "name": "NeaN World"

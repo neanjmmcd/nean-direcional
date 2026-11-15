@@ -38,8 +38,11 @@ sem nada configurado, fica a imagem original do token.
 
 ## Como usar
 
-1. Botão **bússola** no HUD do token (vale para aquele token) ou **Nean Direcional** no menu do ator na barra lateral
-   (vale para os tokens novos dele).
+1. Abra a configuração por um destes caminhos:
+   - botão **bússola** no HUD do token (vale para aquele token);
+   - **Nean Direcional** no menu do ator na barra lateral (vale para os tokens novos dele);
+   - **Configurações → Configurar Módulos → Nean Direcional → Lista de atores** (só o mestre): todos os atores do mundo,
+     com busca pelo nome e uma bússola nos que já estão ativos; clique num ator para configurar o protótipo dele.
 2. Clique em cada vaga para escolher a imagem, ou em **Preencher pela pasta** para o módulo encaixar os arquivos pelo nome.
    Também dá para **arrastar do Windows Explorer** (ou do explorador de arquivos do seu sistema):
    - uma imagem solta numa vaga vai para aquela vaga, com qualquer nome;

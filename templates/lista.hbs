@@ -1,0 +1,17 @@
+<div class="nd-lista-raiz">
+  <div class="nd-busca-linha">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" class="nd-busca" value="{{filtro}}" placeholder="{{localize "NEAN_DIRECIONAL.Lista.Buscar"}}">
+  </div>
+  <ol class="nd-lista">
+    {{#each atores}}
+    <li class="nd-ator" data-actor-id="{{id}}" data-busca="{{busca}}" data-action="abrir">
+      <img src="{{img}}" alt="">
+      <span class="nd-ator-nome">{{nome}}</span>
+      <span class="nd-ator-tipo">{{tipo}}</span>
+      {{#if ativo}}<i class="fa-solid fa-compass nd-ator-ativo" data-tooltip="{{localize "NEAN_DIRECIONAL.Lista.Ativo"}}"></i>{{/if}}
+    </li>
+    {{/each}}
+  </ol>
+  <p class="nd-nada hint" hidden>{{localize "NEAN_DIRECIONAL.Lista.Nada"}}</p>
+</div>

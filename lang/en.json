@@ -38,6 +38,15 @@
     },
     "SemPermissaoEnviar": "You are not allowed to upload files (ask the GM: Settings → Permissions → Upload files).",
     "Enviadas": "{n} of {total} images copied to {pasta}.",
-    "DicaArrastar": "You can drag images from your file explorer: one onto a slot goes to that slot; several at once are matched by name. The images are copied into the world folder."
+    "DicaArrastar": "You can drag images from your file explorer: one onto a slot goes to that slot; several at once are matched by name. The images are copied into the world folder.",
+    "Lista": {
+      "Titulo": "Nean Direcional: actors",
+      "Menu": "Actors",
+      "Botao": "Actor list",
+      "Dica": "Opens a list of every actor in the world, searchable by name; click an actor to set up its prototype token images.",
+      "Buscar": "Search by name…",
+      "Ativo": "Nean Direcional enabled",
+      "Nada": "No actor with that name."
+    }
   }
 }

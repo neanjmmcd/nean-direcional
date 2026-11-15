@@ -10,6 +10,7 @@
 
 import { ID, POSES, STATUS_FURTIVO, STATUS_ARMADO, vaga, VAGAS } from "./constantes.js";
 import { ConfigDirecional } from "./config.js";
+import { ListaAtores } from "./lista.js";
 
 /* ---------- direção ---------- */
 
@@ -101,6 +102,11 @@ Hooks.once("init", () => {
   const s = (chave, padrao) => game.settings.register(ID, chave, {
     name: `NEAN_DIRECIONAL.Config.${chave}.nome`, hint: `NEAN_DIRECIONAL.Config.${chave}.dica`,
     scope: "world", config: true, type: String, default: padrao
+  });
+  // Botão nas configurações do módulo (só o mestre): lista de atores com busca
+  game.settings.registerMenu(ID, "lista", {
+    name: "NEAN_DIRECIONAL.Lista.Menu", label: "NEAN_DIRECIONAL.Lista.Botao", hint: "NEAN_DIRECIONAL.Lista.Dica",
+    icon: "fa-solid fa-users", type: ListaAtores, restricted: true
   });
   s("statusCaido", "dead,prone,unconscious");
   s("statusFurtivo", "");
