@@ -4,7 +4,7 @@ import { ID } from "./constantes.js";
 import { ConfigDirecional } from "./config.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
-const normalizar = t => String(t ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const normalizar = t => String(t ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 export class ListaAtores extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
