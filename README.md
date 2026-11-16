@@ -23,6 +23,8 @@ Depois ative o módulo no mundo em **Configurações → Gerenciar Módulos**.
 - **Furtivo** e **Arma em punho**: condições do próprio módulo, que valem em qualquer sistema. Com o módulo ativo no token,
   aparecem dois botões no HUD, logo abaixo da bússola, para ligar e desligar cada uma (também estão na lista de condições).
   Se o seu sistema já tem uma condição parecida (ex.: `hidden`), ponha o ID dela nas configurações e ela passa a contar.
+
+  <img src="manual/08-botoes-hud.webp" alt="Botões no HUD: bússola, Furtivo e Arma em punho" width="110">
 - **Caído / morto**: as condições `dead`, `prone` e `unconscious` do Foundry (dá para trocar nas configurações do módulo) mostram a imagem de caído.
 
 ## As imagens: 3 seções
