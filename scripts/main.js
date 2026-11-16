@@ -11,6 +11,7 @@
 import { ID, POSES, STATUS_FURTIVO, STATUS_ARMADO, vaga, VAGAS } from "./constantes.js";
 import { ConfigDirecional } from "./config.js";
 import { ListaAtores } from "./lista.js";
+import { ManualDirecional } from "./manual.js";
 
 /* ---------- direção ---------- */
 
@@ -103,7 +104,11 @@ Hooks.once("init", () => {
     name: `NEAN_DIRECIONAL.Config.${chave}.nome`, hint: `NEAN_DIRECIONAL.Config.${chave}.dica`,
     scope: "world", config: true, type: String, default: padrao
   });
-  // Botão nas configurações do módulo (só o mestre): lista de atores com busca
+  // Manual (todos) e lista de atores com busca (só o mestre) nas configurações do módulo
+  game.settings.registerMenu(ID, "manual", {
+    name: "NEAN_DIRECIONAL.Manual.Menu", label: "NEAN_DIRECIONAL.Manual.Botao", hint: "NEAN_DIRECIONAL.Manual.Dica",
+    icon: "fa-solid fa-book-open", type: ManualDirecional, restricted: false
+  });
   game.settings.registerMenu(ID, "lista", {
     name: "NEAN_DIRECIONAL.Lista.Menu", label: "NEAN_DIRECIONAL.Lista.Botao", hint: "NEAN_DIRECIONAL.Lista.Dica",
     icon: "fa-solid fa-users", type: ListaAtores, restricted: true
@@ -112,13 +117,25 @@ Hooks.once("init", () => {
   s("statusFurtivo", "");
   s("statusArmado", "");
 
-  // Condições do módulo no HUD do token
+  registrarCondicoes();
+});
+// Sistemas e módulos podem trocar a lista de condições depois do init: registra de novo
+Hooks.once("setup", registrarCondicoes);
+Hooks.once("ready", registrarCondicoes);
+
+/** Condições do próprio módulo (valem em qualquer sistema): Furtivo e Arma em punho */
+function registrarCondicoes() {
   const icone = nome => `modules/${ID}/icons/${nome}.svg`;
+  const lista = CONFIG.statusEffects;
   for (const st of [
     { id: STATUS_FURTIVO, name: "NEAN_DIRECIONAL.Furtivo", img: icone("furtivo") },
     { id: STATUS_ARMADO, name: "NEAN_DIRECIONAL.Armado", img: icone("armado") }
-  ]) if (!CONFIG.statusEffects.some(e => e.id === st.id)) CONFIG.statusEffects.push(st);
-});
+  ]) {
+    const existe = Array.isArray(lista) ? lista.some(e => e.id === st.id) : !!lista?.[st.id];
+    if (existe) continue;
+    if (Array.isArray(lista)) lista.push(st); else if (lista) lista[st.id] = st;
+  }
+}
 
 /* Andar (arrastar, setas, WASD, régua) e girar (Shift/Ctrl + roda) */
 Hooks.on("preUpdateToken", (doc, changes, options) => {
@@ -164,20 +181,35 @@ for (const gancho of ["createActiveEffect", "deleteActiveEffect", "updateActiveE
 Hooks.on("canvasReady", () => { for (const t of canvas.tokens?.placeables ?? []) preCarregar(t.document); });
 Hooks.on("createToken", doc => preCarregar(doc));
 
-/* Botão no HUD do token */
+/* Botões no HUD do token: configurar (bússola) e, com o módulo ativo no token,
+ * ligar/desligar Furtivo e Arma em punho sem procurar na lista de condições */
 Hooks.on("renderTokenHUD", (hud, html) => {
   const doc = hud.document ?? hud.object?.document;
   if (!doc?.isOwner) return;
   const el = html instanceof HTMLElement ? html : html?.[0];
   const col = el?.querySelector(".col.left");
   if (!col || col.querySelector(".nean-direcional-hud")) return;
-  const botao = document.createElement("button");
-  botao.type = "button";
-  botao.className = "control-icon nean-direcional-hud" + (doc.flags?.[ID]?.ativo ? " active" : "");
-  botao.dataset.tooltip = game.i18n.localize("NEAN_DIRECIONAL.Titulo");
-  botao.innerHTML = '<i class="fa-solid fa-compass"></i>';
-  botao.addEventListener("click", ev => { ev.preventDefault(); ConfigDirecional.abrir(doc); });
-  col.append(botao);
+  const botao = (classe, icone, dica, ativo, aoClicar) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `control-icon nean-direcional-hud ${classe}` + (ativo ? " active" : "");
+    b.dataset.tooltip = dica;
+    b.innerHTML = `<i class="${icone}"></i>`;
+    b.addEventListener("click", ev => { ev.preventDefault(); aoClicar(b); });
+    col.append(b);
+  };
+  botao("nd-hud-config", "fa-solid fa-compass", game.i18n.localize("NEAN_DIRECIONAL.Titulo"),
+    !!doc.flags?.[ID]?.ativo, () => ConfigDirecional.abrir(doc));
+  if (!doc.flags?.[ID]?.ativo || !doc.actor) return;
+  const statuses = doc.actor.statuses ?? new Set();
+  const alternar = async (id, b) => {
+    const ligado = await doc.actor.toggleStatusEffect(id);
+    b.classList.toggle("active", !!ligado);
+  };
+  botao("nd-hud-furtivo", "fa-solid fa-user-ninja", game.i18n.localize("NEAN_DIRECIONAL.Furtivo"),
+    statuses.has(STATUS_FURTIVO), b => alternar(STATUS_FURTIVO, b));
+  botao("nd-hud-armado", "fa-solid fa-hand-fist", game.i18n.localize("NEAN_DIRECIONAL.Armado"),
+    statuses.has(STATUS_ARMADO), b => alternar(STATUS_ARMADO, b));
 });
 
 /* Menu do ator na barra lateral: configura o protótipo (vale para tokens novos) */
@@ -191,5 +223,5 @@ Hooks.on("getActorContextOptions", (_app, opcoes) => {
 });
 
 Hooks.once("ready", () => {
-  game.modules.get(ID).api = { escolher, atualizarToken, poseDoVetor, poseDaRotacao, ordemDirecoes, VAGAS, abrir: d => ConfigDirecional.abrir(d) };
+  game.modules.get(ID).api = { escolher, atualizarToken, poseDoVetor, poseDaRotacao, ordemDirecoes, VAGAS, abrir: d => ConfigDirecional.abrir(d), manual: () => ManualDirecional.abrir() };
 });

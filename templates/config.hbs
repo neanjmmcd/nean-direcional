@@ -4,7 +4,10 @@
   <p class="hint"><i class="fa-solid fa-file-arrow-down"></i> {{localize "NEAN_DIRECIONAL.DicaArrastar"}}</p>
   <div class="nd-topo">
     <label class="nd-check"><input type="checkbox" name="ativo" {{checked ativo}}> {{localize "NEAN_DIRECIONAL.Ativar"}}</label>
-    <button type="button" data-action="pasta"><i class="fa-solid fa-folder-open"></i> {{localize "NEAN_DIRECIONAL.PorPasta"}}</button>
+    <div class="nd-botoes-topo">
+      <button type="button" data-action="manual" data-tooltip="{{localize "NEAN_DIRECIONAL.Manual.Titulo"}}"><i class="fa-solid fa-book-open"></i></button>
+      <button type="button" data-action="pasta"><i class="fa-solid fa-folder-open"></i> {{localize "NEAN_DIRECIONAL.PorPasta"}}</button>
+    </div>
   </div>
 
   {{#each secoes}}

@@ -47,6 +47,12 @@
       "Buscar": "Buscar pelo nome…",
       "Ativo": "Nean Direcional ativo",
       "Nada": "Nenhum ator com esse nome."
+    },
+    "Manual": {
+      "Titulo": "Manual do Nean Direcional",
+      "Menu": "Manual",
+      "Botao": "Abrir o manual",
+      "Dica": "Como configurar as imagens, usar na mesa e nomear os arquivos."
     }
   }
 }

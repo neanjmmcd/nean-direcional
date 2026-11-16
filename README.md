@@ -20,7 +20,9 @@ Depois ative o módulo no mundo em **Configurações → Gerenciar Módulos**.
   olhando para costas ↖ e andando para baixo, vira frente ↙.
 - **Qualquer jeito de mover**: arrastar, setas, WASD e régua com pontos de passagem (vale o último trecho).
 - **Girar parado**: Shift ou Ctrl + roda do mouse escolhe a pose pela rotação. A figura não gira (o módulo liga *travar rotação* do token); quem muda é a imagem.
-- **Furtivo** e **Arma em punho**: condições do próprio módulo, ligadas no HUD do token, cada uma com o seu jogo de imagens.
+- **Furtivo** e **Arma em punho**: condições do próprio módulo, que valem em qualquer sistema. Com o módulo ativo no token,
+  aparecem dois botões no HUD, logo abaixo da bússola, para ligar e desligar cada uma (também estão na lista de condições).
+  Se o seu sistema já tem uma condição parecida (ex.: `hidden`), ponha o ID dela nas configurações e ela passa a contar.
 - **Caído / morto**: as condições `dead`, `prone` e `unconscious` do Foundry (dá para trocar nas configurações do módulo) mostram a imagem de caído.
 
 ## As imagens: 3 seções
@@ -35,6 +37,8 @@ Basta **uma imagem por direção**, com ou sem arma: se a versão pedida não ex
 Se a **direção** não tiver imagem, o token mostra a direção mais próxima que existir (a vizinha que troca só
 um eixo e, por último, a oposta) quando chegar àquele ângulo. Furtivo sem imagem nenhuma usa o jogo normal;
 sem nada configurado, fica a imagem original do token.
+
+![Janela de configuração](manual/04-janela-preenchida.webp)
 
 ## Como usar
 
@@ -67,6 +71,11 @@ O padrão é o das variações do NeanTools (`--variacoes`), com `arma_` para as
 
 O número no fim (`_00001_`) é ignorado; havendo vários, vale o mais alto.
 
+## Manual
+
+Dentro do Foundry: *Configurações → Configurar Módulos → Nean Direcional →* **Abrir o manual**, ou o botão de livro na janela de
+configuração. Em português ou inglês, conforme o idioma do jogo, com imagens.
+
 ## Configurações (mestre)
 
 - **Condições de caído**: IDs separados por vírgula (padrão `dead,prone,unconscious`).
@@ -75,7 +84,7 @@ O número no fim (`_00001_`) é ignorado; havendo vários, vale o mais alto.
 ## Para quem programa
 
 `game.modules.get("nean-direcional").api` expõe `abrir(tokenOuAtor)`, `atualizarToken(tokenDoc)`, `escolher(tokenDoc, pose)`,
-`poseDoVetor(dx, dy, poseAtual)`, `poseDaRotacao(graus, poseAtual)`, `ordemDirecoes(pose)` e `VAGAS`.
+`poseDoVetor(dx, dy, poseAtual)`, `poseDaRotacao(graus, poseAtual)`, `ordemDirecoes(pose)`, `manual()` e `VAGAS`.
 Os dados ficam em `flags["nean-direcional"]` do token ou do protótipo: `{ ativo, imagens, pose, original }`.
 
 ## Licença

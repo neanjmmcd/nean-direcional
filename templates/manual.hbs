@@ -1,0 +1,123 @@
+<div class="nd-manual">
+{{#if pt}}
+  <h1><i class="fa-solid fa-compass"></i> Nean Direcional</h1>
+  <p>O token troca de imagem conforme a direção em que anda ou é girado, com poses próprias para <b>furtivo</b>,
+    <b>arma em punho</b> e <b>caído/morto</b>. Funciona com qualquer sistema.</p>
+
+  <h2>1. Abrir a configuração</h2>
+  <figure class="nd-dir"><img src="{{img}}/02-botao-bussola.webp" alt=""><figcaption>Botão bússola no HUD do token.</figcaption></figure>
+  <ul>
+    <li><b>Um token da cena:</b> clique com o botão direito no token e use a <b>bússola</b> na coluna da esquerda.</li>
+    <li><b>Todos os tokens novos de um ator:</b> clique com o botão direito no ator, na barra lateral, e escolha <b>Nean Direcional</b>.</li>
+    <li><b>Mestre:</b> <i>Configurações → Configurar Módulos → Nean Direcional → Lista de atores</i>. Todos os atores do mundo,
+      com busca pelo nome; a bússola laranja marca os que já estão ativos.</li>
+  </ul>
+  <figure><img src="{{img}}/07-lista-atores.webp" alt=""><figcaption>Lista de atores (só o mestre).</figcaption></figure>
+
+  <h2>2. Escolher as imagens</h2>
+  <figure><img src="{{img}}/03-janela-vazia.webp" alt=""><figcaption>Janela vazia: três seções, quatro direções.</figcaption></figure>
+  <ul>
+    <li>Três seções: <b>Normal</b>, <b>Furtivo</b> e <b>Caído / morto</b>. Em cada direção (↙ ↘ ↖ ↗), a vaga
+      <b>sem arma</b> fica em cima e a <b>com arma</b> logo abaixo.</li>
+    <li><b>Clique numa vaga</b> para escolher a imagem, ou <b>arraste do Windows Explorer</b>: uma imagem numa vaga vai para
+      aquela vaga; várias de uma vez são encaixadas pelo nome do arquivo. As imagens são copiadas para
+      <code>worlds/&lt;mundo&gt;/nean-direcional/&lt;token&gt;/</code>.</li>
+    <li><b>Preencher pela pasta</b> encaixa todos os arquivos de uma pasta pelo nome (veja o item 5).</li>
+    <li>Marque <b>Ativar</b> e salve. Ao desativar, o token volta à imagem original.</li>
+    <li><b>Salvar também no protótipo do ator</b> faz os tokens novos desse ator já saírem configurados.</li>
+  </ul>
+  <figure><img src="{{img}}/04-janela-preenchida.webp" alt=""><figcaption>Não precisa preencher tudo.</figcaption></figure>
+  <p class="nd-nota"><b>Basta uma imagem por direção</b>, com ou sem arma: se a versão pedida não existir, vale a outra. Se a
+    direção não tiver imagem, o token mostra a direção mais próxima que existir. Furtivo sem imagem nenhuma usa o jogo normal.</p>
+
+  <h2>3. Na mesa</h2>
+  <figure><img src="{{img}}/01-token-na-cena.webp" alt=""><figcaption>Token na cena.</figcaption></figure>
+  <ul>
+    <li><b>Andar</b> (arrastar, setas, WASD ou régua) usa a diagonal mais próxima. Andar reto muda só um eixo:
+      olhando para frente ↙ e andando para a direita, vira frente ↘.</li>
+    <li><b>Girar parado:</b> Shift ou Ctrl + roda do mouse. A figura não gira; quem muda é a imagem.</li>
+    <li><b>Furtivo</b> <i class="fa-solid fa-user-ninja"></i> e <b>Arma em punho</b> <i class="fa-solid fa-hand-fist"></i>:
+      botões no HUD do token, abaixo da bússola (aparecem quando o módulo está ativo no token). Também estão na lista de condições.</li>
+    <li><b>Caído / morto:</b> as condições <i>Caído</i>, <i>Morto</i> e <i>Inconsciente</i> mostram a imagem de caído.</li>
+  </ul>
+  <figure class="nd-dir"><img src="{{img}}/05-caido.webp" alt=""><figcaption>Token caído.</figcaption></figure>
+
+  <h2>4. Configurações do mestre</h2>
+  <figure><img src="{{img}}/06-configuracoes.webp" alt=""><figcaption>Configurações do módulo.</figcaption></figure>
+  <ul>
+    <li><b>Condições de caído:</b> IDs separados por vírgula (padrão <code>dead,prone,unconscious</code>).</li>
+    <li><b>Condições de furtivo / arma em punho (extra):</b> se o seu sistema já tem uma condição própria (por exemplo
+      <code>hidden</code>), ponha o ID dela aqui e ela também conta.</li>
+  </ul>
+
+  <h2>5. Nomes de arquivo</h2>
+  <p>O padrão é o das variações do NeanTools, com <code>arma_</code> para as poses com arma. O número no fim é ignorado; havendo vários, vale o mais alto.</p>
+  <pre>&lt;nome&gt;_normal_frente_esq   &lt;nome&gt;_furtivo_frente_esq   &lt;nome&gt;_caido
+&lt;nome&gt;_normal_frente_dir   &lt;nome&gt;_furtivo_frente_dir
+&lt;nome&gt;_normal_costas_esq   &lt;nome&gt;_furtivo_costas_esq
+&lt;nome&gt;_normal_costas_dir   &lt;nome&gt;_furtivo_costas_dir
+&lt;nome&gt;_arma_normal_frente_esq … &lt;nome&gt;_arma_furtivo_costas_dir   &lt;nome&gt;_arma_caido</pre>
+
+  <p class="nd-credito">Nean Direcional, por NeaN World. Uso livre; venda proibida.</p>
+{{else}}
+  <h1><i class="fa-solid fa-compass"></i> Nean Direcional</h1>
+  <p>The token swaps its image according to the direction it walks or is turned, with dedicated poses for <b>stealthy</b>,
+    <b>weapon drawn</b> and <b>prone/dead</b>. Works with any system.</p>
+
+  <h2>1. Opening the settings</h2>
+  <figure class="nd-dir"><img src="{{img}}/02-botao-bussola.webp" alt=""><figcaption>Compass button on the Token HUD.</figcaption></figure>
+  <ul>
+    <li><b>One token on the scene:</b> right-click the token and use the <b>compass</b> in the left column.</li>
+    <li><b>Every new token of an actor:</b> right-click the actor in the sidebar and choose <b>Nean Direcional</b>.</li>
+    <li><b>GM:</b> <i>Settings → Configure Modules → Nean Direcional → Actor list</i>. Every actor in the world, searchable by
+      name; the orange compass marks the ones already enabled.</li>
+  </ul>
+  <figure><img src="{{img}}/07-lista-atores.webp" alt=""><figcaption>Actor list (GM only).</figcaption></figure>
+
+  <h2>2. Choosing the images</h2>
+  <figure><img src="{{img}}/03-janela-vazia.webp" alt=""><figcaption>Empty window: three sections, four directions.</figcaption></figure>
+  <ul>
+    <li>Three sections: <b>Normal</b>, <b>Stealthy</b> and <b>Prone / dead</b>. In each direction (↙ ↘ ↖ ↗) the
+      <b>unarmed</b> slot is on top and the <b>armed</b> one right below.</li>
+    <li><b>Click a slot</b> to pick an image, or <b>drag from your file explorer</b>: one image onto a slot goes to that slot;
+      several at once are matched by file name. Images are copied into <code>worlds/&lt;world&gt;/nean-direcional/&lt;token&gt;/</code>.</li>
+    <li><b>Fill from folder</b> matches every file in a folder by name (see section 5).</li>
+    <li>Tick <b>Enable</b> and save. When disabled, the token goes back to its original image.</li>
+    <li><b>Also save to the actor's prototype token</b> makes this actor's new tokens come out already set up.</li>
+  </ul>
+  <figure><img src="{{img}}/04-janela-preenchida.webp" alt=""><figcaption>You don't need to fill everything.</figcaption></figure>
+  <p class="nd-nota"><b>One image per direction is enough</b>, armed or unarmed: if the requested version is missing, the other one
+    is used. If a direction has no image, the token shows the nearest direction available. Stealthy with no images uses the normal set.</p>
+
+  <h2>3. At the table</h2>
+  <figure><img src="{{img}}/01-token-na-cena.webp" alt=""><figcaption>Token on the scene.</figcaption></figure>
+  <ul>
+    <li><b>Walking</b> (drag, arrow keys, WASD or ruler) uses the nearest diagonal. Walking straight changes only one axis:
+      facing front ↙ and walking right, it becomes front ↘.</li>
+    <li><b>Turning in place:</b> Shift or Ctrl + mouse wheel. The artwork doesn't rotate; the image changes.</li>
+    <li><b>Stealthy</b> <i class="fa-solid fa-user-ninja"></i> and <b>Weapon drawn</b> <i class="fa-solid fa-hand-fist"></i>:
+      buttons on the Token HUD, below the compass (shown when the module is enabled on the token). They are also in the condition list.</li>
+    <li><b>Prone / dead:</b> the <i>Prone</i>, <i>Dead</i> and <i>Unconscious</i> conditions show the prone image.</li>
+  </ul>
+  <figure class="nd-dir"><img src="{{img}}/05-caido.webp" alt=""><figcaption>Prone token.</figcaption></figure>
+
+  <h2>4. GM settings</h2>
+  <figure><img src="{{img}}/06-configuracoes.webp" alt=""><figcaption>Module settings.</figcaption></figure>
+  <ul>
+    <li><b>Down conditions:</b> comma-separated IDs (default <code>dead,prone,unconscious</code>).</li>
+    <li><b>Stealth / weapon drawn conditions (extra):</b> if your system already has its own condition (for example
+      <code>hidden</code>), put its ID here and it counts too.</li>
+  </ul>
+
+  <h2>5. File names</h2>
+  <p>The pattern is the one from NeanTools variations, with <code>arma_</code> for armed poses. The trailing number is ignored; if there are several, the highest wins.</p>
+  <pre>&lt;name&gt;_normal_frente_esq   &lt;name&gt;_furtivo_frente_esq   &lt;name&gt;_caido
+&lt;name&gt;_normal_frente_dir   &lt;name&gt;_furtivo_frente_dir
+&lt;name&gt;_normal_costas_esq   &lt;name&gt;_furtivo_costas_esq
+&lt;name&gt;_normal_costas_dir   &lt;name&gt;_furtivo_costas_dir
+&lt;name&gt;_arma_normal_frente_esq … &lt;name&gt;_arma_furtivo_costas_dir   &lt;name&gt;_arma_caido</pre>
+  <p>(<i>frente</i> = front, <i>costas</i> = back, <i>esq</i> = left, <i>dir</i> = right, <i>furtivo</i> = stealthy, <i>arma</i> = armed, <i>caido</i> = prone.)</p>
+
+  <p class="nd-credito">Nean Direcional, by NeaN World. Free to use; not for sale.</p>
+{{/if}}
+</div>

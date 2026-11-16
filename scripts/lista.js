@@ -4,6 +4,12 @@ import { ID } from "./constantes.js";
 import { ConfigDirecional } from "./config.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+/** Nome do tipo traduzido; se o sistema não traduziu ("TYPES.Actor.npc"), usa o próprio tipo */
+function rotuloTipo(chave, tipo) {
+  const t = chave ? game.i18n.localize(chave) : "";
+  if (t && t !== chave) return t;
+  return String(tipo ?? "").replace(/^./, c => c.toUpperCase());
+}
 const normalizar = t => String(t ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 export class ListaAtores extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -23,7 +29,7 @@ export class ListaAtores extends HandlebarsApplicationMixin(ApplicationV2) {
         id: a.id,
         nome: a.name,
         img: a.img,
-        tipo: game.i18n.localize(tipos[a.type] ?? a.type),
+        tipo: rotuloTipo(tipos[a.type], a.type),
         ativo: !!a.prototypeToken.flags?.[ID]?.ativo,
         busca: normalizar(a.name)
       }))

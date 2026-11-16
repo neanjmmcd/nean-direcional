@@ -47,6 +47,12 @@
       "Buscar": "Search by name…",
       "Ativo": "Nean Direcional enabled",
       "Nada": "No actor with that name."
+    },
+    "Manual": {
+      "Titulo": "Nean Direcional manual",
+      "Menu": "Manual",
+      "Botao": "Open the manual",
+      "Dica": "How to set up the images, use them at the table and name the files."
     }
   }
 }

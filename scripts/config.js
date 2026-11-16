@@ -2,6 +2,7 @@
 
 import { ID, POSES, vaga, VAGAS } from "./constantes.js";
 import { escolher, preCarregar } from "./main.js";
+import { ManualDirecional } from "./manual.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 const FP = () => foundry.applications.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
@@ -26,7 +27,7 @@ export class ConfigDirecional extends HandlebarsApplicationMixin(ApplicationV2) 
     window: { icon: "fa-solid fa-compass", resizable: true },
     position: { width: 660, height: Math.min(820, window.innerHeight - 80) },
     form: { handler: ConfigDirecional.#salvar, closeOnSubmit: true },
-    actions: { escolher: ConfigDirecional.#escolher, limpar: ConfigDirecional.#limpar, pasta: ConfigDirecional.#pasta }
+    actions: { escolher: ConfigDirecional.#escolher, limpar: ConfigDirecional.#limpar, pasta: ConfigDirecional.#pasta, manual: () => ManualDirecional.abrir() }
   };
   static PARTS = { main: { template: `modules/${ID}/templates/config.hbs`, scrollable: [".nd-corpo"] } };
 
