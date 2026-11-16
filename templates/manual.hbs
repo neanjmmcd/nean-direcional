@@ -39,8 +39,10 @@
     <li><b>Girar parado:</b> Shift ou Ctrl + roda do mouse. A figura não gira; quem muda é a imagem.</li>
     <li><b>Furtivo</b> <i class="fa-solid fa-user-ninja"></i> e <b>Arma em punho</b> <i class="fa-solid fa-hand-fist"></i>:
       botões no HUD do token, abaixo da bússola (aparecem quando o módulo está ativo no token). Um clique liga, outro desliga;
-      o botão fica aceso enquanto a condição está ativa. Também estão na lista de condições.</li>
-    <li><b>Caído / morto:</b> as condições <i>Caído</i>, <i>Morto</i> e <i>Inconsciente</i> mostram a imagem de caído.</li>
+      o botão fica aceso enquanto a condição está ativa. Também estão na lista de condições. Se o sistema não aceitar a
+      condição do módulo (o PF2e só aceita as próprias), o botão guarda o estado no token e funciona do mesmo jeito.</li>
+    <li><b>Caído / morto:</b> as condições <i>Caído</i>, <i>Morto</i> e <i>Inconsciente</i> mostram a imagem de caído.
+      Vale também para sistemas que guardam as condições como itens (ex.: PF2e).</li>
   </ul>
   <figure class="nd-dir"><img src="{{img}}/05-caido.webp" alt=""><figcaption>Token caído.</figcaption></figure>
 
@@ -49,7 +51,8 @@
   <ul>
     <li><b>Condições de caído:</b> IDs separados por vírgula (padrão <code>dead,prone,unconscious</code>).</li>
     <li><b>Condições de furtivo / arma em punho (extra):</b> se o seu sistema já tem uma condição própria (por exemplo
-      <code>hidden</code>), ponha o ID dela aqui e ela também conta.</li>
+      <code>hidden</code>), ponha o ID dela aqui e ela também conta. No PF2e: <code>hidden,concealed</code> em furtivo.
+      Desligar pelo botão do HUD desliga essas também.</li>
   </ul>
 
   <h2>5. Nomes de arquivo</h2>
@@ -100,8 +103,10 @@
     <li><b>Turning in place:</b> Shift or Ctrl + mouse wheel. The artwork doesn't rotate; the image changes.</li>
     <li><b>Stealthy</b> <i class="fa-solid fa-user-ninja"></i> and <b>Weapon drawn</b> <i class="fa-solid fa-hand-fist"></i>:
       buttons on the Token HUD, below the compass (shown when the module is enabled on the token). Click to turn on, click again to
-      turn off; the button stays lit while the condition is active. They are also in the condition list.</li>
-    <li><b>Prone / dead:</b> the <i>Prone</i>, <i>Dead</i> and <i>Unconscious</i> conditions show the prone image.</li>
+      turn off; the button stays lit while the condition is active. They are also in the condition list. If the system rejects the
+      module's condition (PF2e only accepts its own), the button stores the state on the token and works the same way.</li>
+    <li><b>Prone / dead:</b> the <i>Prone</i>, <i>Dead</i> and <i>Unconscious</i> conditions show the prone image.
+      This also works on systems that store conditions as items (e.g. PF2e).</li>
   </ul>
   <figure class="nd-dir"><img src="{{img}}/05-caido.webp" alt=""><figcaption>Prone token.</figcaption></figure>
 
@@ -110,7 +115,8 @@
   <ul>
     <li><b>Down conditions:</b> comma-separated IDs (default <code>dead,prone,unconscious</code>).</li>
     <li><b>Stealth / weapon drawn conditions (extra):</b> if your system already has its own condition (for example
-      <code>hidden</code>), put its ID here and it counts too.</li>
+      <code>hidden</code>), put its ID here and it counts too. On PF2e: <code>hidden,concealed</code> for stealth.
+      Turning it off from the HUD button turns these off too.</li>
   </ul>
 
   <h2>5. File names</h2>

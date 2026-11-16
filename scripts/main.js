@@ -37,16 +37,60 @@ export function poseDaRotacao(graus, atual) {
 /* ---------- condições ---------- */
 
 const lista = chave => String(game.settings.get(ID, chave) ?? "").split(",").map(s => s.trim()).filter(Boolean);
-const statusDo = doc => doc?.actor?.statuses ?? new Set();
+/**
+ * Condições ativas do ator: as de efeito ativo (padrão do Foundry) e as que o sistema guarda como item
+ * (ex.: PF2e, em que Escondido, Caído etc. são itens do tipo "condition"), pelo slug.
+ */
+function statusDo(doc) {
+  const actor = doc?.actor;
+  const s = new Set(actor?.statuses ?? []);
+  for (const item of actor?.items ?? []) {
+    if (!["condition", "effect"].includes(item.type)) continue;
+    if (item.isActive === false || item.active === false) continue;
+    const slug = item.slug ?? item.system?.slug;
+    if (slug) s.add(slug);
+  }
+  return s;
+}
 const tem = (statuses, ids) => ids.some(i => statuses.has(i));
+
+/** Marca no próprio token: usada quando o sistema não aceita a condição do módulo (ex.: PF2e) */
+const MARCA = { furtivo: "furtivo", arma: "armado" };
 
 export function estado(doc) {
   const s = statusDo(doc);
+  const m = doc?.flags?.[ID] ?? {};
   return {
     caido: tem(s, lista("statusCaido")),
-    furtivo: tem(s, [STATUS_FURTIVO, ...lista("statusFurtivo")]),
-    arma: tem(s, [STATUS_ARMADO, ...lista("statusArmado")])
+    furtivo: !!m[MARCA.furtivo] || tem(s, [STATUS_FURTIVO, ...lista("statusFurtivo")]),
+    arma: !!m[MARCA.arma] || tem(s, [STATUS_ARMADO, ...lista("statusArmado")])
   };
+}
+
+/**
+ * Liga/desliga Furtivo ou Arma em punho. Tenta a condição do módulo; se o sistema a recusar
+ * (o PF2e cancela em silêncio qualquer efeito ativo que não seja "morto"), guarda a marca no token.
+ * Ao desligar, tira tudo o que estiver contando: condição do módulo, marca e condições extras do sistema.
+ */
+export async function alternarEstado(doc, chave) {
+  const actor = doc?.actor;
+  if (!actor) return false;
+  const id = chave === "furtivo" ? STATUS_FURTIVO : STATUS_ARMADO;
+  const extras = lista(chave === "furtivo" ? "statusFurtivo" : "statusArmado");
+  const marca = `flags.${ID}.${MARCA[chave]}`;
+  const tentar = async (st, active) => { try { await actor.toggleStatusEffect(st, { active }); } catch (e) { /* sistema sem essa condição */ } };
+
+  if (!estado(doc)[chave]) {
+    await tentar(id, true);
+    if (!actor.statuses?.has(id)) await doc.update({ [marca]: true }, { neanDirecional: true });
+  } else {
+    if (actor.statuses?.has(id)) await tentar(id, false);
+    if (doc.flags?.[ID]?.[MARCA[chave]]) await doc.update({ [marca]: false }, { neanDirecional: true });
+    const ativas = statusDo(doc);
+    for (const e of extras) if (ativas.has(e)) await tentar(e, false);
+  }
+  await atualizarToken(doc);
+  return estado(doc)[chave];
 }
 
 /** Direções da mais próxima para a mais distante: a própria, as vizinhas (troca um eixo) e a oposta */
@@ -166,12 +210,14 @@ Hooks.on("preUpdateToken", (doc, changes, options) => {
   if (src && src !== doc.texture.src) foundry.utils.setProperty(changes, "texture.src", src);
 });
 
-/* Condições ligadas/desligadas: caído, furtivo, arma em punho */
-for (const gancho of ["createActiveEffect", "deleteActiveEffect", "updateActiveEffect"]) {
+/* Condições ligadas/desligadas: caído, furtivo, arma em punho.
+ * Efeitos ativos (padrão do Foundry) e itens de condição/efeito (sistemas como o PF2e). */
+for (const gancho of ["createActiveEffect", "deleteActiveEffect", "updateActiveEffect", "createItem", "deleteItem", "updateItem"]) {
   Hooks.on(gancho, (efeito, ...resto) => {
     if (resto.at(-1) !== game.user.id) return;          // só quem fez a mudança aplica
     const actor = efeito.parent;
     if (!(actor instanceof Actor)) return;
+    if (efeito.documentName === "Item" && !["condition", "effect"].includes(efeito.type)) return;
     // espera o ator recalcular as condições
     setTimeout(() => { for (const t of tokensDoAtor(actor)) atualizarToken(t); }, 0);
   });
@@ -201,15 +247,12 @@ Hooks.on("renderTokenHUD", (hud, html) => {
   botao("nd-hud-config", "fa-solid fa-compass", game.i18n.localize("NEAN_DIRECIONAL.Titulo"),
     !!doc.flags?.[ID]?.ativo, () => ConfigDirecional.abrir(doc));
   if (!doc.flags?.[ID]?.ativo || !doc.actor) return;
-  const statuses = doc.actor.statuses ?? new Set();
-  const alternar = async (id, b) => {
-    const ligado = await doc.actor.toggleStatusEffect(id);
-    b.classList.toggle("active", !!ligado);
-  };
+  const atual = estado(doc);
+  const alternar = async (chave, b) => b.classList.toggle("active", await alternarEstado(doc, chave));
   botao("nd-hud-furtivo", "fa-solid fa-user-ninja", game.i18n.localize("NEAN_DIRECIONAL.Furtivo"),
-    statuses.has(STATUS_FURTIVO), b => alternar(STATUS_FURTIVO, b));
+    atual.furtivo, b => alternar("furtivo", b));
   botao("nd-hud-armado", "fa-solid fa-hand-fist", game.i18n.localize("NEAN_DIRECIONAL.Armado"),
-    statuses.has(STATUS_ARMADO), b => alternar(STATUS_ARMADO, b));
+    atual.arma, b => alternar("arma", b));
 });
 
 /* Menu do ator na barra lateral: configura o protótipo (vale para tokens novos) */
@@ -223,5 +266,5 @@ Hooks.on("getActorContextOptions", (_app, opcoes) => {
 });
 
 Hooks.once("ready", () => {
-  game.modules.get(ID).api = { escolher, atualizarToken, poseDoVetor, poseDaRotacao, ordemDirecoes, VAGAS, abrir: d => ConfigDirecional.abrir(d), manual: () => ManualDirecional.abrir() };
+  game.modules.get(ID).api = { escolher, atualizarToken, estado, alternarEstado, poseDoVetor, poseDaRotacao, ordemDirecoes, VAGAS, abrir: d => ConfigDirecional.abrir(d), manual: () => ManualDirecional.abrir() };
 });

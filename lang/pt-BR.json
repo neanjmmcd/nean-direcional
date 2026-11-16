@@ -29,7 +29,7 @@
       },
       "statusFurtivo": {
         "nome": "Condições de furtivo (extra)",
-        "dica": "Além da condição Furtivo do módulo, outros IDs do seu sistema que contam como furtivo, separados por vírgula."
+        "dica": "Além da condição Furtivo do módulo, outros IDs do seu sistema que contam como furtivo, separados por vírgula (ex.: no PF2e, hidden,concealed)."
       },
       "statusArmado": {
         "nome": "Condições de arma em punho (extra)",

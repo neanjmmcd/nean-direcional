@@ -29,7 +29,7 @@
       },
       "statusFurtivo": {
         "nome": "Stealth conditions (extra)",
-        "dica": "Besides the module's Stealthy condition, other IDs from your system that count as stealthy, comma separated."
+        "dica": "Besides the module's Stealthy condition, other IDs from your system that count as stealthy, comma separated (e.g. on PF2e: hidden,concealed)."
       },
       "statusArmado": {
         "nome": "Weapon drawn conditions (extra)",

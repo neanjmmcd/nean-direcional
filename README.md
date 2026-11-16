@@ -22,10 +22,14 @@ Depois ative o módulo no mundo em **Configurações → Gerenciar Módulos**.
 - **Girar parado**: Shift ou Ctrl + roda do mouse escolhe a pose pela rotação. A figura não gira (o módulo liga *travar rotação* do token); quem muda é a imagem.
 - **Furtivo** e **Arma em punho**: condições do próprio módulo, que valem em qualquer sistema. Com o módulo ativo no token,
   aparecem dois botões no HUD, logo abaixo da bússola, para ligar e desligar cada uma (também estão na lista de condições).
-  Se o seu sistema já tem uma condição parecida (ex.: `hidden`), ponha o ID dela nas configurações e ela passa a contar.
+  Se o sistema não aceitar a condição do módulo (o PF2e, por exemplo, só aceita as próprias), o botão guarda o estado no
+  próprio token e funciona do mesmo jeito. Se o seu sistema já tem uma condição parecida (ex.: `hidden`), ponha o ID dela nas
+  configurações e ela passa a contar.
 
   <img src="manual/08-botoes-hud.webp" alt="Botões no HUD: bússola, Furtivo e Arma em punho" width="110">
 - **Caído / morto**: as condições `dead`, `prone` e `unconscious` do Foundry (dá para trocar nas configurações do módulo) mostram a imagem de caído.
+- **Condições como item**: sistemas que guardam as condições como itens do ator (ex.: PF2e) também valem, pelo slug
+  (`prone`, `unconscious`, `hidden`…).
 
 ## As imagens: 3 seções
 
@@ -82,12 +86,13 @@ configuração. Em português ou inglês, conforme o idioma do jogo, com imagens
 
 - **Condições de caído**: IDs separados por vírgula (padrão `dead,prone,unconscious`).
 - **Condições de furtivo / arma em punho (extra)**: IDs do seu sistema que também contam, além das condições do módulo.
+  No PF2e, por exemplo, `hidden,concealed` em furtivo. Ao desligar pelo botão do HUD, elas também são desligadas.
 
 ## Para quem programa
 
 `game.modules.get("nean-direcional").api` expõe `abrir(tokenOuAtor)`, `atualizarToken(tokenDoc)`, `escolher(tokenDoc, pose)`,
-`poseDoVetor(dx, dy, poseAtual)`, `poseDaRotacao(graus, poseAtual)`, `ordemDirecoes(pose)`, `manual()` e `VAGAS`.
-Os dados ficam em `flags["nean-direcional"]` do token ou do protótipo: `{ ativo, imagens, pose, original }`.
+`poseDoVetor(dx, dy, poseAtual)`, `poseDaRotacao(graus, poseAtual)`, `ordemDirecoes(pose)`, `estado(tokenDoc)`, `alternarEstado(tokenDoc, "furtivo" | "arma")`, `manual()` e `VAGAS`.
+Os dados ficam em `flags["nean-direcional"]` do token ou do protótipo: `{ ativo, imagens, pose, original }`, mais `furtivo` e `armado` quando o sistema não aceita a condição do módulo.
 
 ## Licença
 
